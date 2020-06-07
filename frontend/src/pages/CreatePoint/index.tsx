@@ -4,7 +4,7 @@ import { Map, TileLayer, Marker } from "react-leaflet";
 import api from "../../services/api";
 import axios from "axios";
 import { LeafletMouseEvent } from "leaflet";
-
+import Dropzone from "../../components/Dropzone";
 import Logo from "../../assets/logo.svg";
 import { FiArrowLeft } from "react-icons/fi";
 
@@ -58,6 +58,8 @@ const CreatePoint = () => {
   ]);
 
   const [selectedItems, setSelectedItems] = useState<number[]>([]); //armazena um array de numero pk o user pode escolher mais que 1
+
+  const [selectedFile, setSelectedFile] = useState<File>();
 
   const history = useHistory();
 
@@ -149,16 +151,18 @@ const CreatePoint = () => {
     const items = selectedItems;
     const [latitude, longitude] = selectedPosition;
 
-    const data = {
-      name,
-      email,
-      whatsapp,
-      uf,
-      city,
-      items,
-      latitude,
-      longitude,
-    };
+    const data = new FormData();
+
+    data.append("name", name);
+    data.append("email", email);
+    data.append("whatsapp", whatsapp);
+    data.append("uf", uf);
+    data.append("city", city);
+    data.append("items", String(items.join(",")));
+    data.append("latitude", String(latitude));
+    data.append("longitude", String(longitude));
+
+    if (selectedFile) data.append("image", selectedFile);
 
     await api.post("points", data);
 
@@ -182,6 +186,8 @@ const CreatePoint = () => {
         <h1>
           Cadastro do <br /> ponto de coleta
         </h1>
+
+        <Dropzone onFileUploaded={setSelectedFile} />
 
         <fieldset>
           <legend>
