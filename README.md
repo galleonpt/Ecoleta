@@ -10,6 +10,8 @@
 - [Sobre](#sobre)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 
+<a id="sobre"></a>
+
 ## :bookmark: Sobre
 
 O <strong>Ecoleta</strong> é uma aplicação Web e Mobile para ajudar pessoas a encontrarem pontos de coleta de lixo para reciclagem.
